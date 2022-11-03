@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>home page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-app="module1">
+  <div ng-controller="app">
+    <!-- // hint_create_button -->
+    <button ng-click="changePage()">Change Page</button>
+  </div>
+</body>
+<script>
+  var app = angular.module("module1", []);
+  app.controller('app', ['$scope', function ($app) {
+    $app.changePage = function () {
+      // hint_open_new_page
+      window.location.href = "/list_page.html";
+    }
+  }]);
+</script>
+
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>list page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body ng-app="module1">
+<div ng-controller="app">
+    <div ng-show="isLoading">
+        <div>loading ...</div>
+    </div>
+    <div ng-hide="isLoading">
+        <ul>
+            <!-- // hint_show_webservice_result_on_list-->
+            <li ng-repeat="item in result">
+                <div>{{item.title}}</div>
+                <!-- //hint_button_on_list-->
+                <button ng-click="inquiryInfo(item)">Info</button>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+
+<script>
+    var app = angular.module("module1", []);
+    app.controller('app', ['$scope', function ($app) {
+
+        $app.loadingWebService = async function () {
+            console.log("loadingWebService called");
+
+            // hint_show_loading_indicator
+            console.log("set isLoading = true");
+            $app.isLoading = true;
+
+            let url = "https://jsonplaceholder.typicode.com/albums"
+
+            // hint_loading_webservice
+            let output = await axios.get(url);
+            $app.result = output.data;
+            console.log("result webservice",$app.result);
+
+            $app.isLoading = false;
+            console.log("set isLoading = false");
+            $app.$apply();
+        }
+
+        $app.inquiryInfo = function (item) {
+            // hint_show_detail_item_on_alert
+            console.log("inquiry info", item)
+
+            let msg = item.id.toString() + "-" + item.title;
+            alert(msg)
+        }
+
+        $app.isLoading = true;
+        $app.data = [];
+        $app.loadingWebService();
+    }]);
+</script>
+
+</html>
